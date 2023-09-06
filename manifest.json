@@ -22,13 +22,6 @@
                 "https://codeforces.com/contest/*"
             ],
             "js": ["./scripts/codeforcesContent.js"]
-        },
-        {
-            "matches": [
-                "https://www.luogu.com.cn/*"
-            ],
-            "js": ["./scripts/luoguContent.js"],
-            "run_at": "document_end"
         }
     ],
     "action": {

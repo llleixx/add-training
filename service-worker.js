@@ -1,25 +1,18 @@
-/*
-p,P luogu
-1834F cf
-av\w, bv\w bilibili
-\d{8} pixiv
-*/
-
 const CODEFORCES_BASE_URL = "https://codeforces.com/";
 const LUOGU_BASE_URL = "https://www.luogu.com.cn/";
 const BILIBILI_BASE_URL = "https://www.bilibili.com/";
 const PIXIV_BASE_URL = "https://pixiv.net/";
 
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.local.set({ "luogu": "", "codeforces": "", "atcoder": ""});
+    chrome.storage.local.set({ "codeforces": "" });
 });
 
 chrome.omnibox.onInputEntered.addListener((input) => {
-    input.trim(); 
-    const cfRE = /^\d+[a-zA-Z]$/;
-    const luoguRE = /^[pP]\d+$/;
-    const bilibiliRE = /^[(av)|(bv)]\w+$/
-    const pixivRE = /^\d{8}$/
+    input.trim();
+    const cfRE = /^\d+[a-zA-Z]$/i;
+    const luoguRE = /^p\d+$/i;
+    const bilibiliRE = /^[(av)|(bv)]\w+$/i;
+    const pixivRE = /^\d{8}$/;
     let desURL = null;
     if (cfRE.test(input)) {
         let contestStr = input.slice(0, -1), problemStr = input.slice(-1);
@@ -31,6 +24,14 @@ chrome.omnibox.onInputEntered.addListener((input) => {
     } else if (pixivRE.test(input)) {
         desURL = PIXIV_BASE_URL + "artworks/" + input;
     }
-    console.log(desURL);
     if (desURL != null) chrome.tabs.create({ url: desURL });
 })
+
+chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse) {
+        if (request.url) {
+            console.log(request.url);
+            chrome.tabs.create({ url: request.url });
+        }
+    }
+);

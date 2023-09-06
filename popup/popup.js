@@ -1,34 +1,27 @@
 const codeforcesAPI = "https://codeforces.com/api/user.info?handles=";
-const atcoderAPI = "";
 
 async function getStorage() {
     let infos = ["", "", ""];
     infos[0] = await chrome.storage.local.get("codeforces");
-    infos[1] = await chrome.storage.local.get("atcoder");
-    infos[2] = await chrome.storage.local.get("luogu");
     return infos;
 }
 
 async function updateStorage(key, value) {
     await chrome.storage.local.set({ [key]: value });
-    console.log({ [key]: value });
 }
 
 async function modify() {
     document.querySelector('#modifyBtn').style.display = "none";
     let infoForm = document.querySelector('#infoForm');
-    let [{ codeforces: codeforcesId }, { atcoder: atcoderId }, { luogu: luoguId }] = await getStorage();
+    let [{ codeforces: codeforcesId }] = await getStorage();
     document.querySelector("#codeforces").value = codeforcesId;
-    document.querySelector("#atcoder").value = atcoderId;
-    document.querySelector("#luogu").value = luoguId;
     document.querySelector("#infoShow").style.display = "none";
     infoForm.style.display = "block";
 }
 
 async function infoShow() {
-    let [{ codeforces: codeforcesId }, { atcoder: atcoderId }] = await getStorage();
+    let [{ codeforces: codeforcesId }] = await getStorage();
     let codeforcesShow = document.querySelector("#codeforcesShow");
-    // let atcoderShow = document.querySelector("#atcoderShow");
     if (codeforcesId !== "") {
         let codeforcesResponse = await fetch(codeforcesAPI + codeforcesId);
         let codeforcesJson = await codeforcesResponse.json();
@@ -65,18 +58,13 @@ async function infoShow() {
     } else {
         codeforcesShow.style.display = "none";
     }
-    // atcoderShow.style.display = "none";
 }
 
-document.querySelector("#infoForm").addEventListener("submit", (e) => {
+document.querySelector("#infoForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     let infoForm = document.querySelector("#infoForm");
     let codeforcesId = infoForm.querySelector("#codeforces").value.trim();
-    let atcoderId = infoForm.querySelector("#atcoder").value.trim();
-    let luoguId = infoForm.querySelector("#luogu").value.trim();
-    updateStorage("codeforces", codeforcesId);
-    updateStorage("atcoder", atcoderId);
-    updateStorage("luogu", luoguId);
+    await updateStorage("codeforces", codeforcesId);
     infoForm.style.display = "none";
     document.querySelector("#modifyBtn").style.display = "block";
     infoShow();
@@ -86,3 +74,8 @@ document.querySelector("#infoForm").addEventListener("submit", (e) => {
 document.querySelector("#modifyBtn").addEventListener("click", modify);
 infoShow();
 document.querySelector("#infoShow").style.display = "block";
+
+
+document.querySelector("#codeforcesShow").addEventListener("click", () => {
+    chrome.runtime.sendMessage({url: "https://codeforces.com"});
+});

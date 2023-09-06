@@ -1,0 +1,37 @@
+{
+    "manifest_version": 3,
+    "name": "Add training",
+    "version": "1.0.0",
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "permissions": ["storage"],
+    "omnibox": {
+        "keyword": "at"
+    },
+    "host_permissions": [
+        "https://luogu.com.cn/*", 
+        "https://codeforces.com/*",
+        "https://bilibili.com/*",
+        "https://pixiv.net/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://codeforces.com/problemset/problem/*",
+                "https://codeforces.com/contest/*"
+            ],
+            "js": ["./scripts/codeforcesContent.js"]
+        },
+        {
+            "matches": [
+                "https://www.luogu.com.cn/*"
+            ],
+            "js": ["./scripts/luoguContent.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "action": {
+        "default_popup": "./popup/popup.html"
+    }
+}

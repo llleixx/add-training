@@ -103,16 +103,17 @@ async function getTags() {
     let response = await fetch(apiURL);
     let myJson = await response.json();
     problems = myJson.result.problems;
+    problemId = problemId.toLowerCase();
     for (const problem of problems) {
-        if (problem.index === problemId) {
+        if (problem.index.toLowerCase() === problemId) {
             addTags(problem.tags, problem.rating);
             break;
         }
     }
 }
 
-const contestURL = /^\/contest\/(\d+)\/problem\/([A-Z])$/;
-const problemsetURL = /^\/problemset\/problem\/(\d+)\/([A-Z])$/;
+const contestURL = /^\/contest\/(\d+)\/problem\/([a-z])$/i;
+const problemsetURL = /^\/problemset\/problem\/(\d+)\/([a-z])$/i;
 
 const pathname = window.location.pathname;
 

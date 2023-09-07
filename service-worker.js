@@ -1,7 +1,7 @@
 const CODEFORCES_BASE_URL = "https://codeforces.com/";
 const LUOGU_BASE_URL = "https://www.luogu.com.cn/";
 const BILIBILI_BASE_URL = "https://www.bilibili.com/";
-const PIXIV_BASE_URL = "https://pixiv.net/";
+const PIXIV_BASE_URL = "https://www.pixiv.net/";
 
 chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.local.set({ "codeforces": "" });

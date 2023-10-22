@@ -24,37 +24,43 @@ async function infoShow() {
     let codeforcesShow = document.querySelector("#codeforcesShow");
     if (codeforcesId !== "") {
         let codeforcesResponse = await fetch(codeforcesAPI + codeforcesId);
-        let codeforcesJson = await codeforcesResponse.json();
-        let rating = codeforcesJson?.result?.[0]?.rating;
-        let inner = codeforcesShow.lastElementChild;
-        if (rating !== undefined) {
-            inner.innerHTML = rating;
-            if (rating < 1200) {
-                inner.style.color = "#CCCCCC";
-            } else if (rating < 1400) {
-                inner.style.color = "#77FF77";
-            } else if (rating < 1600) {
-                inner.style.color = "#77DDBB"
-            } else if (rating < 1900) {
-                inner.style.color = "#AAAAFF";
-            } else if (rating < 2100) {
-                inner.style.color = "#AA00AA";
-            } else if (rating < 2300) {
-                inner.style.color = "#FFCC88";
-            } else if (rating < 2400) {
-                inner.style.color = "#FFBB55";
-            } else if (rating < 2600) {
-                inner.style.color = "#FF7777";
-            } else if (rating < 3000) {
-                inner.style.color = "#FF3333";
+        if (codeforcesResponse.status == 200) {
+            let codeforcesJson = await codeforcesResponse.json();
+            let rating = codeforcesJson?.result?.[0]?.rating;
+            let inner = codeforcesShow.lastElementChild;
+            if (rating !== undefined) {
+                inner.innerHTML = rating;
+                if (rating < 1200) {
+                    inner.style.color = "#CCCCCC";
+                } else if (rating < 1400) {
+                    inner.style.color = "#77FF77";
+                } else if (rating < 1600) {
+                    inner.style.color = "#77DDBB"
+                } else if (rating < 1900) {
+                    inner.style.color = "#AAAAFF";
+                } else if (rating < 2100) {
+                    inner.style.color = "#AA00AA";
+                } else if (rating < 2300) {
+                    inner.style.color = "#FFCC88";
+                } else if (rating < 2400) {
+                    inner.style.color = "#FFBB55";
+                } else if (rating < 2600) {
+                    inner.style.color = "#FF7777";
+                } else if (rating < 3000) {
+                    inner.style.color = "#FF3333";
+                } else {
+                    inner.style.color = "#AA0000";
+                }
             } else {
-                inner.style.color = "#AA0000";
+                inner.innerHTML = "NOT FOUND";
+                inner.style.color = "red";
             }
+            codeforcesShow.style.display = "block";
         } else {
-            inner.innerHTML = "NOT FOUND";
+            let inner = codeforcesShow.lastElementChild;
+            inner.innerHTML = "Network error.";
             inner.style.color = "red";
         }
-        codeforcesShow.style.display = "block";
     } else {
         codeforcesShow.style.display = "none";
     }

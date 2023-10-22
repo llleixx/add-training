@@ -1,7 +1,9 @@
 function removeOriginalTags() {
-    tags = document.querySelector("#addTagForm").previousElementSibling;
-    if (tags.firstElementChild.textContent.includes("Problem tags")) {
-        tags.remove();
+    tags = document.querySelector("#addTagForm")?.previousElementSibling;
+    if (tags) {
+        if (tags.firstElementChild.textContent.includes("Problem tags")) {
+            tags.remove();
+        }
     }
 }
 
@@ -92,7 +94,7 @@ function addTags(tags, rating) {
 
     tagContainer.insertAdjacentHTML("afterend", `<div style="clear:both;text-align:right;font-size:1.1rem;"></div>`);
 
-    document.querySelector("#addTagForm").insertAdjacentElement('beforebegin', container);
+    document.querySelector(".sidebar-menu").insertAdjacentElement('beforebegin', container);
     document.querySelector("#tagHider").addEventListener("click", showTags);
 };
 
@@ -112,8 +114,8 @@ async function getTags() {
     }
 }
 
-const contestURL = /^\/contest\/(\d+)\/problem\/([a-z])$/i;
-const problemsetURL = /^\/problemset\/problem\/(\d+)\/([a-z])$/i;
+const contestURL = /^\/contest\/(\d+)\/problem\/(\w+)$/i;
+const problemsetURL = /^\/problemset\/problem\/(\d+)\/(\w+)$/i;
 
 const pathname = window.location.pathname;
 

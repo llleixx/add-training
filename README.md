@@ -1,6 +1,6 @@
-## Problem
+## Install
 
-The extension must be published to google extension store to be used normally, but it needs to pay 5 dollars. However, I don't have ways to pay :(. Now it can only be used through loading unpacked extension :(.
+[Chrome web store](https://chrome.google.com/webstore/detail/add-training/hggkdgogimlffepjljlbpommibdalmca?hl=zh-CN&authuser=0)
 
 ## Description
 

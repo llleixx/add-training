@@ -16,7 +16,7 @@
         "https://bilibili.com/*",
         "https://pixiv.net/*"
     ],
-    "icon": {
+    "icons": {
         "16": "images/icon16.png",
         "32": "images/icon32.png",
         "48": "images/icon48.png",
